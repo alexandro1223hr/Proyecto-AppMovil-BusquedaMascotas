@@ -66,5 +66,5 @@ class RegistroViewController: UIViewController {
         // Quita el View Controller actual y vuelve al anterior
         navigationController?.popViewController(animated: true)
     }
-    // SCRUM-2
+    // SCRUM-3
 }
