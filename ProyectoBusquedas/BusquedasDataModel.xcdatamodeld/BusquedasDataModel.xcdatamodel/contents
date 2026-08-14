@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="22H420" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="PublicacionEntity" representedClassName="PublicacionEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="caracteristicaMascota1" optional="YES" attributeType="String"/>
+        <attribute name="caracteristicaMascota2" optional="YES" attributeType="String"/>
+        <attribute name="caracteristicaMascota3" optional="YES" attributeType="String"/>
+        <attribute name="ciudadDistrito" optional="YES" attributeType="String"/>
+        <attribute name="descripcionFechaHoraPerdido" optional="YES" attributeType="String"/>
+        <attribute name="estadoBusqueda" optional="YES" attributeType="String"/>
+        <attribute name="fechaHoraActualizacion" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="fechaHoraPublicacion" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="fotoMascota" optional="YES" attributeType="Binary"/>
+        <attribute name="idPublicacion" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="idUsuario" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="latitud" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="longitud" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="monto" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="nombreMascota" optional="YES" attributeType="String"/>
+        <attribute name="nombreUsuario" optional="YES" attributeType="String"/>
+        <attribute name="telefonoOpcional" optional="YES" attributeType="String"/>
+        <attribute name="telefonoUsuario" optional="YES" attributeType="String"/>
+        <attribute name="ubicacionPerdido" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="PublicacionGuardadaEntity" representedClassName="PublicacionGuardadaEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="fechaGuardado" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="idPublicacion" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="idUsuario" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+    </entity>
+    <entity name="UsuarioEntity" representedClassName=".UsuarioEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="correo" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="nombre" optional="YES" attributeType="String"/>
+        <attribute name="password" optional="YES" attributeType="String"/>
+        <attribute name="telefono" optional="YES" attributeType="String"/>
+    </entity>
+</model>
