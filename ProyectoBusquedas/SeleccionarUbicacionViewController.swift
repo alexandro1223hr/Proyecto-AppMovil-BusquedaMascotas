@@ -200,4 +200,7 @@ class SeleccionarUbicacionViewController: UIViewController, UITextFieldDelegate,
         alert.addAction(UIAlertAction(title: "Entendido", style: .default))
         present(alert, animated: true)
     }
+    
 }
+// SCRUM-9
+// SCRUM-11
