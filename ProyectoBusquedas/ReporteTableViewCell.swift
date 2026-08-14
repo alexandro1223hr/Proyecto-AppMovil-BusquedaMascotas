@@ -26,6 +26,8 @@ class ReporteTableViewCell: UITableViewCell {
     @IBOutlet weak var telefonoOpcionalLabel: UILabel!
     @IBOutlet weak var montoRecompensaLabel: UILabel!
     
+    @IBOutlet weak var comunicarseTelfefonosStackView: UIStackView!
+    @IBOutlet weak var actualizacionStackView: UIStackView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -40,5 +42,5 @@ class ReporteTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
+    // SCRUM-4
 }

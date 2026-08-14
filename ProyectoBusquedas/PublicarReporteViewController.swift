@@ -182,6 +182,7 @@ class PublicarReporteViewController: UIViewController, UIImagePickerControllerDe
             mostrarError("Describe cuándo y dónde se perdió la mascota")
             return
         }
+        /*
         if nombreMascota.isEmpty {
             mostrarError("Indica el nombre de la mascota")
             return
@@ -190,7 +191,8 @@ class PublicarReporteViewController: UIViewController, UIImagePickerControllerDe
             mostrarError("Indica un teléfono de contacto")
             return
         }
-
+        */
+         
         // 4. Validar y convertir el monto (opcional, pero si se ingresa debe ser válido)
         var montoDecimal: Decimal = 0
         if !montoTexto.isEmpty {

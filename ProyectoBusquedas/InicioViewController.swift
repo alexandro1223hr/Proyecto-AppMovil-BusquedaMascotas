@@ -50,11 +50,11 @@ class InicioViewController: UIViewController, UITableViewDataSource, UITableView
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reporteCell", for: indexPath) as! ReporteTableViewCell
-    
+     
         let reporte = reportesPublicadosList[indexPath.row]
-        
+     
         cell.nombreUsuarioLabel.text = reporte.nombreUsuario
-        
+     
         // Tiempo transcurrido desde la fecha y hora de la publicacion
         if let fechaPublicacion = reporte.fechaHoraPublicacion {
             cell.fechaHoraPublicacionLabel.text =
@@ -62,49 +62,74 @@ class InicioViewController: UIViewController, UITableViewDataSource, UITableView
         } else {
             cell.fechaHoraPublicacionLabel.text = ""
         }
-        
+     
         // Tiempo transcurrido desde la actualización, solo si existe
         if let fechaActualizacion = reporte.fechaHoraActualizacion {
-            cell.ultimaActualizacionLabel.isHidden = false
-            cell.fechaHoraActualizacionLabel.isHidden = false
+            cell.actualizacionStackView.isHidden = true
 
             cell.fechaHoraActualizacionLabel.text =
                 tiempoTranscurrido(desde: fechaActualizacion)
         } else {
-            cell.ultimaActualizacionLabel.isHidden = true
-            cell.fechaHoraActualizacionLabel.isHidden = true
+            cell.actualizacionStackView.isHidden = false
         }
-        
+     
         cell.estadoBusquedaLabel.text = reporte.estadoBusqueda
         cell.ciudadDistritoLabel.text = reporte.ciudadDistrito
         cell.descripcionFechaHoraPerdidoLabel.text = reporte.descripcionFechaHoraPerdido
-        cell.nombreMascotaLabel.text = reporte.nombreMascota
+        cell.ubicacionPerdidoLabel.text = reporte.ubicacionPerdido
         cell.caracteristicaMascota1Label.text = reporte.caracteristicaMascota1
         cell.caracteristicaMascota2Label.text = reporte.caracteristicaMascota2
         cell.caracteristicaMascota3Label.text = reporte.caracteristicaMascota3
-        
+     
         // Convierte Binary Data a UIImage
         if let datosImagen = reporte.fotoMascota {
             cell.fotoMascotaImageView.image = UIImage(data: datosImagen)
         } else {
             cell.fotoMascotaImageView.image = UIImage(named: "imagenMascotaDefault")
         }
-        
-        cell.telefonoUsuarioLabel.text = reporte.telefonoUsuario
-        
-        // Oculta teléfono opcional si está vacío
-        if let telefonoOpcional = reporte.telefonoOpcional,
-           !telefonoOpcional.isEmpty {
-
-            cell.telefonoOpcionalLabel.text = telefonoOpcional
-            cell.telefonoOpcionalLabel.isHidden = false
-
+     
+        // Comportamiendo tipo hidden para el 2do tipo de publicacion
+        if let nombreMascota = reporte.nombreMascota, !nombreMascota.isEmpty {
+            cell.nombreMascotaLabel.text = nombreMascota
+            cell.nombreMascotaLabel.isHidden = false
         } else {
-            cell.telefonoOpcionalLabel.isHidden = true
+            cell.nombreMascotaLabel.isHidden = true
         }
-        
-        cell.montoRecompensaLabel.text = formatearMonto(reporte.monto! as Decimal)
-        
+     
+        //
+        let montoValor = reporte.monto?.decimalValue ?? 0
+        if montoValor > 0 {
+            cell.montoRecompensaLabel.text = formatearMonto(montoValor)
+            cell.montoRecompensaLabel.isHidden = false
+        } else {
+            cell.montoRecompensaLabel.isHidden = true
+        }
+     
+        //
+        let telefonoUsuario = reporte.telefonoUsuario ?? ""
+        let telefonoOpcional = reporte.telefonoOpcional ?? ""
+     
+        if telefonoUsuario.isEmpty && telefonoOpcional.isEmpty {
+            // Ninguno de los dos teléfonos existe: se oculta todo el stack view
+            cell.comunicarseTelfefonosStackView.isHidden = true
+        } else {
+            cell.comunicarseTelfefonosStackView.isHidden = false
+     
+            if !telefonoUsuario.isEmpty {
+                cell.telefonoUsuarioLabel.text = telefonoUsuario
+                cell.telefonoUsuarioLabel.isHidden = false
+            } else {
+                cell.telefonoUsuarioLabel.isHidden = true
+            }
+     
+            if !telefonoOpcional.isEmpty {
+                cell.telefonoOpcionalLabel.text = telefonoOpcional
+                cell.telefonoOpcionalLabel.isHidden = false
+            } else {
+                cell.telefonoOpcionalLabel.isHidden = true
+            }
+        }
+     
         return cell
     }
 
@@ -125,7 +150,7 @@ class InicioViewController: UIViewController, UITableViewDataSource, UITableView
         
         do {
             let results = try
-            managedContext.fetch(PublicacionEntity.fetchRequest())
+            managedContext.fetch(request)
             reportesPublicadosList = results as [PublicacionEntity]
         }
         catch let error as NSError {
@@ -177,6 +202,6 @@ class InicioViewController: UIViewController, UITableViewDataSource, UITableView
         let numero = NSDecimalNumber(decimal: monto)
         let montoTexto = formatter.string(from: numero) ?? "\(numero)"
 
-        return montoTexto
+        return "¡Recompensa! S/. \(montoTexto)"
     }
 }
