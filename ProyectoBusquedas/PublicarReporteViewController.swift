@@ -255,3 +255,4 @@ class PublicarReporteViewController: UIViewController, UIImagePickerControllerDe
         present(alert, animated: true)
     }
 }
+// SCRUM-5
