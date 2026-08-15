@@ -55,11 +55,13 @@ class PublicarReporteViewController: UIViewController, UIImagePickerControllerDe
         let opcionEncontrado = UIAction(title: "Encontrado") { _ in
             self.estadoBusquedaSeleccionado = "Encontrado"
         }
+        /*
         let opcionFinalizado = UIAction(title: "Finalizado") { _ in
             self.estadoBusquedaSeleccionado = "Finalizado"
         }
+        */
 
-        seleccionarEstadoButton.menu = UIMenu(children: [opcionPorDefecto, opcionSeBusca, opcionEncontrado, opcionFinalizado])
+        seleccionarEstadoButton.menu = UIMenu(children: [opcionPorDefecto, opcionSeBusca, opcionEncontrado])
         seleccionarEstadoButton.showsMenuAsPrimaryAction = true
         seleccionarEstadoButton.changesSelectionAsPrimaryAction = true
 
@@ -212,7 +214,7 @@ class PublicarReporteViewController: UIViewController, UIImagePickerControllerDe
 
         let ahora = Date()
         publicacion.fechaHoraPublicacion = ahora
-        publicacion.fechaHoraActualizacion = ahora
+        publicacion.fechaHoraActualizacion = nil
 
         publicacion.estadoBusqueda = estadoBusquedaSeleccionado
 

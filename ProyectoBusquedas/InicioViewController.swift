@@ -11,13 +11,15 @@ import CoreData
 class InicioViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var ReportesTableView: UITableView!
-
     @IBOutlet weak var barraBusqueda: UISearchBar!
-
+    @IBOutlet weak var menuLateralButton: UIBarButtonItem!
+    
     var reportesPublicadosList: [PublicacionEntity] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configurarMenuLateral(modoOscuroActivado: false)
+        
         ReportesTableView.dataSource = self
         ReportesTableView.delegate = self
         
@@ -30,6 +32,39 @@ class InicioViewController: UIViewController, UITableViewDataSource, UITableView
 
         // Te muestra tu publicacion en el Inicio luego de crearla tu mismo
         listarReportesPublicados()
+    }
+    
+    func configurarMenuLateral(modoOscuroActivado: Bool) {
+        //Crear la opción de Modo Oscuro con el estado dinámico
+        let opcionModoOscuro = UIAction(title: "Modo Oscuro",image: UIImage(systemName: "moon"), state: modoOscuroActivado ? .on : .off
+        ) { [weak self] action in
+            guard let self = self else { return }
+            
+            let nuevoEstado = !modoOscuroActivado
+            //Cambiar el tema en la app
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+               let window = windowScene.windows.first {
+                window.overrideUserInterfaceStyle = nuevoEstado ? .dark : .light
+            }
+            //Reconstruir el menú
+            self.configurarMenuLateral(modoOscuroActivado: nuevoEstado)
+        }
+        // Mantener desplegado
+        opcionModoOscuro.attributes = .keepsMenuPresented
+        // Cada opción dispara su propio segue hacia la pantalla correspondiente
+        let opcion1 = UIAction(title: "Reportes publicados") { [weak self] _ in
+            self?.performSegue(withIdentifier: "mostrarReportesPublicados", sender: self)
+        }
+        let opcion2 = UIAction(title: "Reportes recibidos") { [weak self] _ in
+            self?.performSegue(withIdentifier: "mostrarReportesRecibidos", sender: self)
+        }
+        let opcion3 = UIAction(title: "Mapa general") { [weak self] _ in
+            self?.performSegue(withIdentifier: "mostrarMapaGeneral", sender: self)
+        }
+        // Menu
+        let menu = UIMenu(title: "Opciones", children: [opcion1, opcion2, opcion3, opcionModoOscuro])
+        
+        menuLateralButton.menu = menu
     }
     
     func configuracionInicial() {
@@ -65,12 +100,12 @@ class InicioViewController: UIViewController, UITableViewDataSource, UITableView
      
         // Tiempo transcurrido desde la actualización, solo si existe
         if let fechaActualizacion = reporte.fechaHoraActualizacion {
-            cell.actualizacionStackView.isHidden = true
+            cell.actualizacionStackView.isHidden = false
 
             cell.fechaHoraActualizacionLabel.text =
                 tiempoTranscurrido(desde: fechaActualizacion)
         } else {
-            cell.actualizacionStackView.isHidden = false
+            cell.actualizacionStackView.isHidden = true
         }
      
         cell.estadoBusquedaLabel.text = reporte.estadoBusqueda
@@ -130,9 +165,38 @@ class InicioViewController: UIViewController, UITableViewDataSource, UITableView
             }
         }
      
+        cell.reporteActual = reporte
+         
+        let yaGuardado = publicacionEstaGuardada(reporte)
+        cell.configurarModoBotones(esMisPublicaciones: false, yaGuardado: yaGuardado)
+         
+        cell.accionBotonIzquierdo = { [weak self, weak cell] in
+            guard let self = self, let cell = cell else { return }
+            self.alternarGuardado(reporte, celda: cell)
+        }
+         
+        cell.accionBotonDerecho = { [weak self] in
+            self?.responderPublicacion(reporte)
+        }
+        
         return cell
     }
-
+    
+    // MARK: Vista detalle
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let reporte = reportesPublicadosList[indexPath.row]
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "ReporteDetalleViewController") as! ReporteDetalleViewController
+        
+        vc.descripcion = reporte.descripcionFechaHoraPerdido ?? ""
+        vc.latitud = reporte.latitud
+        vc.longitud = reporte.longitud
+        vc.nombreMascotaPin = reporte.nombreMascota ?? ""
+        
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     func listarReportesPublicados() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.persistentContainer.viewContext
@@ -204,4 +268,93 @@ class InicioViewController: UIViewController, UITableViewDataSource, UITableView
 
         return "¡Recompensa! S/. \(montoTexto)"
     }
+    
+    func guardarPublicacion(_ reporte: PublicacionEntity) {
+        // TODO: crear PublicacionGuardadaEntity
+    }
+
+    // Revisa si el usuario actual ya guardó esta publicación específica
+    func publicacionEstaGuardada(_ reporte: PublicacionEntity) -> Bool {
+        guard let idUsuarioString = UserDefaults.standard.string(forKey: "usuarioActualID"),
+              let idUsuario = UUID(uuidString: idUsuarioString),
+              let idPublicacion = reporte.idPublicacion else {
+            return false
+        }
+     
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+     
+        let request: NSFetchRequest<PublicacionGuardadaEntity> = PublicacionGuardadaEntity.fetchRequest()
+        request.predicate = NSPredicate(
+            format: "idUsuario == %@ AND idPublicacion == %@",
+            idUsuario as CVarArg,
+            idPublicacion as CVarArg
+        )
+        request.fetchLimit = 1
+     
+        do {
+            return try context.fetch(request).first != nil
+        } catch {
+            print("Error al verificar si está guardada: \(error)")
+            return false
+        }
+    }
+     
+    // Alterna el estado guardado: si ya estaba guardada la quita, si no, la guarda.
+    // Actualiza el ícono de inmediato sobre la celda visible, sin esperar a
+    // recargar toda la tabla.
+    func alternarGuardado(_ reporte: PublicacionEntity, celda: ReporteTableViewCell) {
+        guard let idUsuarioString = UserDefaults.standard.string(forKey: "usuarioActualID"),
+              let idUsuario = UUID(uuidString: idUsuarioString) else {
+            mostrarError("Debes iniciar sesión para guardar una publicación")
+            return
+        }
+     
+        guard let idPublicacion = reporte.idPublicacion else { return }
+     
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+     
+        let request: NSFetchRequest<PublicacionGuardadaEntity> = PublicacionGuardadaEntity.fetchRequest()
+        request.predicate = NSPredicate(
+            format: "idUsuario == %@ AND idPublicacion == %@",
+            idUsuario as CVarArg,
+            idPublicacion as CVarArg
+        )
+        request.fetchLimit = 1
+     
+        do {
+            let existentes = try context.fetch(request)
+     
+            if let guardado = existentes.first {
+                // Ya estaba guardada: se elimina
+                context.delete(guardado)
+                try context.save()
+                celda.actualizarIconoGuardado(yaGuardado: false)
+            } else {
+                // No estaba guardada: se crea
+                let nuevoGuardado = PublicacionGuardadaEntity(context: context)
+                nuevoGuardado.id = UUID()
+                nuevoGuardado.idUsuario = idUsuario
+                nuevoGuardado.idPublicacion = idPublicacion
+                nuevoGuardado.fechaGuardado = Date()
+     
+                try context.save()
+                celda.actualizarIconoGuardado(yaGuardado: true)
+            }
+        } catch {
+            mostrarError("No se pudo actualizar el guardado: \(error.localizedDescription)")
+        }
+    }
+     
+    func responderPublicacion(_ reporte: PublicacionEntity) {
+        // TODO: navegar a pantalla de responder / contacto
+    }
+     
+    func mostrarError(_ mensaje: String) {
+        let alert = UIAlertController(title: "Atención", message: mensaje, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Entendido", style: .default))
+        present(alert, animated: true)
+    }
+    
 }
