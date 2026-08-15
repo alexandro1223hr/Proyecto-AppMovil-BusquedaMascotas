@@ -45,6 +45,15 @@
 		AECD82CF302D192800830129 /* PublicarReporteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECD82CE302D192800830129 /* PublicarReporteViewController.swift */; };
 		AECD82D0302D192800830129 /* PublicarReporteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECD82CE302D192800830129 /* PublicarReporteViewController.swift */; };
 		AECD82D1302D192800830129 /* PublicarReporteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECD82CE302D192800830129 /* PublicarReporteViewController.swift */; };
+		AED83E52302FB0670083C045 /* ReportesPublicadosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED83E51302FB0670083C045 /* ReportesPublicadosViewController.swift */; };
+		AED83E53302FB0670083C045 /* ReportesPublicadosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED83E51302FB0670083C045 /* ReportesPublicadosViewController.swift */; };
+		AED83E54302FB0670083C045 /* ReportesPublicadosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED83E51302FB0670083C045 /* ReportesPublicadosViewController.swift */; };
+		AED83E56302FB0F40083C045 /* ReportesRecibidosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED83E55302FB0F40083C045 /* ReportesRecibidosViewController.swift */; };
+		AED83E57302FB0F40083C045 /* ReportesRecibidosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED83E55302FB0F40083C045 /* ReportesRecibidosViewController.swift */; };
+		AED83E58302FB0F40083C045 /* ReportesRecibidosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED83E55302FB0F40083C045 /* ReportesRecibidosViewController.swift */; };
+		AED83E5A302FEB880083C045 /* MapaGeneralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED83E59302FEB880083C045 /* MapaGeneralViewController.swift */; };
+		AED83E5B302FEB880083C045 /* MapaGeneralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED83E59302FEB880083C045 /* MapaGeneralViewController.swift */; };
+		AED83E5C302FEB880083C045 /* MapaGeneralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED83E59302FEB880083C045 /* MapaGeneralViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +96,9 @@
 		AE5BEADF302AADD400A98601 /* ReporteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReporteTableViewCell.swift; sourceTree = "<group>"; };
 		AE7AF20F302E539D00467F1F /* SeleccionarUbicacionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeleccionarUbicacionViewController.swift; sourceTree = "<group>"; };
 		AECD82CE302D192800830129 /* PublicarReporteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicarReporteViewController.swift; sourceTree = "<group>"; };
+		AED83E51302FB0670083C045 /* ReportesPublicadosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportesPublicadosViewController.swift; sourceTree = "<group>"; };
+		AED83E55302FB0F40083C045 /* ReportesRecibidosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportesRecibidosViewController.swift; sourceTree = "<group>"; };
+		AED83E59302FEB880083C045 /* MapaGeneralViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapaGeneralViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +158,9 @@
 				AE5BEADF302AADD400A98601 /* ReporteTableViewCell.swift */,
 				AECD82CE302D192800830129 /* PublicarReporteViewController.swift */,
 				AE7AF20F302E539D00467F1F /* SeleccionarUbicacionViewController.swift */,
+				AED83E51302FB0670083C045 /* ReportesPublicadosViewController.swift */,
+				AED83E55302FB0F40083C045 /* ReportesRecibidosViewController.swift */,
+				AED83E59302FEB880083C045 /* MapaGeneralViewController.swift */,
 				AE0DDD3A30267CC50092CB15 /* Info.plist */,
 				AE0DDD643026814A0092CB15 /* PerfilViewController.swift */,
 				AE0DDD6830269B1B0092CB15 /* LoginViewController.swift */,
@@ -306,13 +321,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE10E2F23027D1CE000ADBD6 /* BusquedasDataModel.xcdatamodeld in Sources */,
+				AED83E56302FB0F40083C045 /* ReportesRecibidosViewController.swift in Sources */,
 				AE0DDD6930269B1B0092CB15 /* LoginViewController.swift in Sources */,
 				AE0DDD653026814A0092CB15 /* PerfilViewController.swift in Sources */,
 				AE0DDD2A30267CC30092CB15 /* AppDelegate.swift in Sources */,
 				AE0DDD61302680340092CB15 /* GuardadosViewController.swift in Sources */,
 				AE5BEAE0302AADD400A98601 /* ReporteTableViewCell.swift in Sources */,
 				AECD82CF302D192800830129 /* PublicarReporteViewController.swift in Sources */,
+				AED83E5A302FEB880083C045 /* MapaGeneralViewController.swift in Sources */,
 				AE7AF210302E539D00467F1F /* SeleccionarUbicacionViewController.swift in Sources */,
+				AED83E52302FB0670083C045 /* ReportesPublicadosViewController.swift in Sources */,
 				AE5BEADC302A861A00A98601 /* ActualizarPerfilViewController.swift in Sources */,
 				AE0DDD6D3026AD1A0092CB15 /* RegistroViewController.swift in Sources */,
 				AE0DDD2C30267CC30092CB15 /* SceneDelegate.swift in Sources */,
@@ -328,12 +346,15 @@
 				AE0DDD4430267CC60092CB15 /* ProyectoBusquedasTests.swift in Sources */,
 				AE0DDD6E3026AD1A0092CB15 /* RegistroViewController.swift in Sources */,
 				AE0DDD62302680340092CB15 /* GuardadosViewController.swift in Sources */,
+				AED83E5B302FEB880083C045 /* MapaGeneralViewController.swift in Sources */,
 				AE0DDD663026814A0092CB15 /* PerfilViewController.swift in Sources */,
 				AE5BEAE1302AADD400A98601 /* ReporteTableViewCell.swift in Sources */,
 				AECD82D0302D192800830129 /* PublicarReporteViewController.swift in Sources */,
+				AED83E57302FB0F40083C045 /* ReportesRecibidosViewController.swift in Sources */,
 				AE10E2F33027D1CE000ADBD6 /* BusquedasDataModel.xcdatamodeld in Sources */,
 				AE0DDD6A30269B1B0092CB15 /* LoginViewController.swift in Sources */,
 				AE0DDD5E30267DBE0092CB15 /* InicioViewController.swift in Sources */,
+				AED83E53302FB0670083C045 /* ReportesPublicadosViewController.swift in Sources */,
 				AE7AF211302E539D00467F1F /* SeleccionarUbicacionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -343,13 +364,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE5BEADE302A861A00A98601 /* ActualizarPerfilViewController.swift in Sources */,
+				AED83E58302FB0F40083C045 /* ReportesRecibidosViewController.swift in Sources */,
 				AE0DDD6B30269B1B0092CB15 /* LoginViewController.swift in Sources */,
 				AE0DDD4E30267CC60092CB15 /* ProyectoBusquedasUITests.swift in Sources */,
 				AE0DDD63302680340092CB15 /* GuardadosViewController.swift in Sources */,
 				AE0DDD5F30267DBE0092CB15 /* InicioViewController.swift in Sources */,
 				AE5BEAE2302AADD400A98601 /* ReporteTableViewCell.swift in Sources */,
 				AECD82D1302D192800830129 /* PublicarReporteViewController.swift in Sources */,
+				AED83E5C302FEB880083C045 /* MapaGeneralViewController.swift in Sources */,
 				AE7AF212302E539D00467F1F /* SeleccionarUbicacionViewController.swift in Sources */,
+				AED83E54302FB0670083C045 /* ReportesPublicadosViewController.swift in Sources */,
 				AE0DDD6F3026AD1A0092CB15 /* RegistroViewController.swift in Sources */,
 				AE0DDD5030267CC60092CB15 /* ProyectoBusquedasUITestsLaunchTests.swift in Sources */,
 				AE0DDD673026814A0092CB15 /* PerfilViewController.swift in Sources */,
