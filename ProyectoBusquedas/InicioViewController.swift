@@ -8,7 +8,7 @@
 import UIKit
 import CoreData
 
-class InicioViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class InicioViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,UISearchBarDelegate {
 
     @IBOutlet weak var ReportesTableView: UITableView!
     @IBOutlet weak var barraBusqueda: UISearchBar!
@@ -71,6 +71,7 @@ class InicioViewController: UIViewController, UITableViewDataSource, UITableView
         // Reemplaza el titulo del Navigation Bar(zona superior) por la barra de busqueda
         navigationItem.titleView = barraBusqueda
         barraBusqueda.placeholder = "Buscar"
+        barraBusqueda.delegate = self
         
         // Pinta los iconos del Tab Bar(zona inferior) de verde
         if let tabBar = tabBarController?.tabBar {
@@ -197,13 +198,29 @@ class InicioViewController: UIViewController, UITableViewDataSource, UITableView
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func listarReportesPublicados() {
+    // Listar Reportes
+    
+    func listarReportesPublicados(filtro: String = "") {
+        // CoreData
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.persistentContainer.viewContext
         
         // Busca las publicaciones
-        let request: NSFetchRequest<PublicacionEntity> =
-            PublicacionEntity.fetchRequest()
+        let request: NSFetchRequest<PublicacionEntity> = PublicacionEntity.fetchRequest()
+        
+        // Define texto para filtrar
+        let texto = filtro.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !texto.isEmpty {
+            // [cd] Ignora mayusculas y tildes
+            let filtrarCiudad = NSPredicate(format: "ciudadDistrito CONTAINS[cd] %@", texto)
+            let filtrarMascota = NSPredicate(format: "nombreMascota CONTAINS[cd] %@", texto)
+            let filtrarUsuario = NSPredicate(format: "nombreUsuario CONTAINS[cd] %@", texto)
+            let filtrarEstado = NSPredicate(format: "estadoBusqueda CONTAINS[cd] %@", texto)
+            
+            request.predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [
+                filtrarCiudad, filtrarMascota, filtrarUsuario, filtrarEstado
+            ])
+        }
         
         // Las ordena por fecha mas reciente
         let orden = NSSortDescriptor(
@@ -222,9 +239,10 @@ class InicioViewController: UIViewController, UITableViewDataSource, UITableView
         }
         ReportesTableView.reloadData()
     }
+
     
     // Funciones de utilidad
-    
+
     // Calcula tiempo transcurrido y lo establece como texto String
     func tiempoTranscurrido(desde fecha: Date) -> String {
         let calendario = Calendar.current
@@ -355,6 +373,23 @@ class InicioViewController: UIViewController, UITableViewDataSource, UITableView
         let alert = UIAlertController(title: "Atención", message: mensaje, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Entendido", style: .default))
         present(alert, animated: true)
+    }
+    
+    
+    // MARK: Funciones para la Barra de busqueda
+    // Se ejecuta cuando el usuario presiona el botón "Buscar" del teclado
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        listarReportesPublicados(filtro: searchBar.text ?? "")
+    }
+     
+    // Se ejecuta si el usuario borra todo el texto y la barra queda vacía;
+    // sin esto, tendría que presionar "Buscar" con el campo vacío para
+    // volver a ver todas las publicaciones
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        if (searchBar.text ?? "").isEmpty {
+            listarReportesPublicados(filtro: "")
+        }
     }
     
 }

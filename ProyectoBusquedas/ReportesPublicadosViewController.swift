@@ -146,6 +146,21 @@ class ReportesPublicadosViewController: UIViewController, UITableViewDataSource,
         return cell
     }
  
+    // MARK: - Vista detalle
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let reporte = misReportesList[indexPath.row]
+     
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "ReporteDetalleViewController") as! ReporteDetalleViewController
+     
+        vc.descripcion = reporte.descripcionFechaHoraPerdido ?? ""
+        vc.latitud = reporte.latitud
+        vc.longitud = reporte.longitud
+        vc.nombreMascotaPin = reporte.nombreMascota ?? ""
+     
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     // MARK: - Acciones de los botones
  
     func finalizarReporte(_ reporte: PublicacionEntity) {
