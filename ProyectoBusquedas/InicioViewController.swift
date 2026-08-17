@@ -34,6 +34,7 @@ class InicioViewController: UIViewController, UITableViewDataSource, UITableView
         listarReportesPublicados()
     }
     
+    // MARK: - Menu Lateral
     func configurarMenuLateral(modoOscuroActivado: Bool) {
         //Crear la opción de Modo Oscuro con el estado dinámico
         let opcionModoOscuro = UIAction(title: "Modo Oscuro",image: UIImage(systemName: "moon"), state: modoOscuroActivado ? .on : .off
@@ -80,6 +81,7 @@ class InicioViewController: UIViewController, UITableViewDataSource, UITableView
         }
     }
     
+    // MARK: - Funciones Table View
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return reportesPublicadosList.count
     }
@@ -169,7 +171,7 @@ class InicioViewController: UIViewController, UITableViewDataSource, UITableView
         cell.reporteActual = reporte
          
         let yaGuardado = publicacionEstaGuardada(reporte)
-        cell.configurarModoBotones(esMisPublicaciones: false, yaGuardado: yaGuardado)
+        cell.actualizarIconoGuardado(yaGuardado: yaGuardado)
          
         cell.accionBotonIzquierdo = { [weak self, weak cell] in
             guard let self = self, let cell = cell else { return }
@@ -198,8 +200,7 @@ class InicioViewController: UIViewController, UITableViewDataSource, UITableView
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    // Listar Reportes
-    
+    // MARK: - Listar Reportes
     func listarReportesPublicados(filtro: String = "") {
         // CoreData
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -207,6 +208,9 @@ class InicioViewController: UIViewController, UITableViewDataSource, UITableView
         
         // Busca las publicaciones
         let request: NSFetchRequest<PublicacionEntity> = PublicacionEntity.fetchRequest()
+        
+        // Filtra Reportes Finalizados
+        let filtrarFinalizados = NSPredicate(format: "estadoBusqueda != %@", "Finalizado")
         
         // Define texto para filtrar
         let texto = filtro.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -218,8 +222,10 @@ class InicioViewController: UIViewController, UITableViewDataSource, UITableView
             let filtrarEstado = NSPredicate(format: "estadoBusqueda CONTAINS[cd] %@", texto)
             
             request.predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [
-                filtrarCiudad, filtrarMascota, filtrarUsuario, filtrarEstado
+                filtrarCiudad, filtrarMascota, filtrarUsuario, filtrarEstado, filtrarFinalizados
             ])
+        } else {
+            request.predicate = filtrarFinalizados
         }
         
         // Las ordena por fecha mas reciente
@@ -291,6 +297,7 @@ class InicioViewController: UIViewController, UITableViewDataSource, UITableView
         // TODO: crear PublicacionGuardadaEntity
     }
 
+    // MARK: - Funciones Guardar Publicacion
     // Revisa si el usuario actual ya guardó esta publicación específica
     func publicacionEstaGuardada(_ reporte: PublicacionEntity) -> Bool {
         guard let idUsuarioString = UserDefaults.standard.string(forKey: "usuarioActualID"),
@@ -365,6 +372,7 @@ class InicioViewController: UIViewController, UITableViewDataSource, UITableView
         }
     }
      
+    // MARK: - Reponder Publicacion
     func responderPublicacion(_ reporte: PublicacionEntity) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "EnviarRespuestaViewController") as! EnviarRespuestaViewController
@@ -381,7 +389,7 @@ class InicioViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     
-    // MARK: Funciones para la Barra de busqueda
+    // MARK: - Funciones para la Barra de busqueda
     // Se ejecuta cuando el usuario presiona el botón "Buscar" del teclado
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()

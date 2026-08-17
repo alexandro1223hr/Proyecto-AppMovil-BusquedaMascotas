@@ -10,7 +10,6 @@ import CoreData
 
 class ReportesPublicadosViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    
     @IBOutlet weak var misReportesTableView: UITableView!
     
     var misReportesList: [PublicacionEntity] = []
@@ -28,6 +27,7 @@ class ReportesPublicadosViewController: UIViewController, UITableViewDataSource,
         listarMisReportes()
     }
  
+    // MARK: - Listar mis Reportes
     func listarMisReportes() {
         // Solo tiene sentido ver "mis publicaciones" con sesión iniciada
         guard let idString = UserDefaults.standard.string(forKey: "usuarioActualID"),
@@ -55,6 +55,7 @@ class ReportesPublicadosViewController: UIViewController, UITableViewDataSource,
         misReportesTableView.reloadData()
     }
  
+    // MARK: - Funciones TableViewCell
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return misReportesList.count
     }
@@ -131,21 +132,48 @@ class ReportesPublicadosViewController: UIViewController, UITableViewDataSource,
             }
         }
  
-        // Diferencia clave respecto a InicioViewController: modo "Mis Publicaciones"
         cell.reporteActual = reporte
-        cell.configurarModoBotones(esMisPublicaciones: true)
  
-        cell.accionBotonIzquierdo = { [weak self] in
-            self?.finalizarReporte(reporte)
+        cell.accionBotonIzquierdo = { [weak self, weak cell] in
+            guard let self = self, let cell = cell else { return }
+            self.finalizarReporte(reporte, celda: cell)
         }
  
-        cell.accionBotonDerecho = { [weak self] in
-            self?.irAReportesRecibidos()
+        cell.accionBotonDerecho = { [weak self, weak cell] in
+            guard let self = self, let cell = cell else { return }
+            self.irAVerRespuestas(celda: cell)
         }
  
+        let estaFinalizado = (reporte.estadoBusqueda == "Finalizado")
+        cell.actualizarIconoFinalizado(yaFinalizado: estaFinalizado)
+        
         return cell
     }
  
+    func irAVerRespuestas(celda: ReporteTableViewCell) {
+        // Se busca el indexPath actual de esa celda específica en el momento
+        // del toque (no se puede confiar en el indexPath del momento de creación,
+        // porque la celda pudo haberse reutilizado para otra fila mientras tanto)
+        guard let indexPath = respuestasTableView(for: celda) else { return }
+     
+        let reporte = misReportesList[indexPath.row]
+        performSegue(withIdentifier: "mostrarVerRespuestas", sender: reporte)
+    }
+     
+    // Encuentra el indexPath actual de una celda dada, buscándola en el table view
+    func respuestasTableView(for celda: ReporteTableViewCell) -> IndexPath? {
+        return misReportesTableView.indexPath(for: celda)
+    }
+    
+    // MARK: - idPublicacion para VerRespuestasVC
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "mostrarVerRespuestas",
+           let destino = segue.destination as? VerRespuestasViewController,
+           let reporte = sender as? PublicacionEntity {
+            destino.idPublicacion = reporte.idPublicacion
+        }
+    }
+    
     // MARK: - Vista detalle
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let reporte = misReportesList[indexPath.row]
@@ -162,14 +190,35 @@ class ReportesPublicadosViewController: UIViewController, UITableViewDataSource,
     }
     
     // MARK: - Acciones de los botones
- 
-    func finalizarReporte(_ reporte: PublicacionEntity) {
-        // TODO: cambiar reporte.estadoBusqueda a "Finalizado" y guardar contexto
+    func finalizarReporte(_ reporte: PublicacionEntity, celda: ReporteTableViewCell) {
+        let alerta = UIAlertController(title: "Finalizar reporte",
+                                       message: "¿Está seguro de finalizar este reporte? Ya no será visible para otros usuarios",
+                                       preferredStyle: .alert)
+        
+        let accionConfirmar = UIAlertAction(title: "Confirmar", style: .default) { _ in
+            reporte.estadoBusqueda = "Finalizado"
+            
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let context = appDelegate.persistentContainer.viewContext
+            
+            do {
+                try context.save()
+                // La celda actualiza su propio botón izquierdo internamente
+                celda.actualizarIconoFinalizado(yaFinalizado: true)
+                celda.estadoBusquedaLabel?.text = "Finalizado"
+            } catch {
+                print("Error al guardar el estado finalizado: \(error)")
+            }
+        }
+        
+        let accionCancelar = UIAlertAction(title: "Cancelar", style: .cancel, handler: nil)
+        alerta.addAction(accionCancelar)
+        alerta.addAction(accionConfirmar)
+        
+        present(alerta, animated: true, completion: nil)
     }
  
     func irAReportesRecibidos() {
-        // No hay relación reporte→respuestas específica, así que simplemente
-        // navega a la pantalla general de Reportes Recibidos
         performSegue(withIdentifier: "mostrarReportesRecibidos", sender: self)
     }
  
@@ -215,4 +264,7 @@ class ReportesPublicadosViewController: UIViewController, UITableViewDataSource,
  
         return "¡Recompensa! S/. \(montoTexto)"
     }
+    
+
+    
 }

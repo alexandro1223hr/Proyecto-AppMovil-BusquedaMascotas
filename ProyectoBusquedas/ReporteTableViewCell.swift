@@ -44,7 +44,6 @@ class ReporteTableViewCell: UITableViewCell {
  
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
  
         fotoMascotaImageView.contentMode = .scaleAspectFill
         fotoMascotaImageView.clipsToBounds = true
@@ -53,26 +52,6 @@ class ReporteTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
  
-        // Configure the view for the selected state
-    }
- 
-    // esMisPublicaciones = true  → "Finalizar" / "Ver respuestas"
-    // esMisPublicaciones = false → "Guardar" / "Responder"
-    // yaGuardado solo importa cuando esMisPublicaciones es false: decide si el
-    // ícono de guardar se muestra lleno (ya guardado) o vacío (no guardado).
-    func configurarModoBotones(esMisPublicaciones: Bool, yaGuardado: Bool = false) {
-        if esMisPublicaciones {
-            botonIzquierdoAccion.setTitle("Finalizar", for: .normal)
-            botonIzquierdoAccion.setImage(UIImage(systemName: "checkmark.seal"), for: .normal)
- 
-            botonDerechoAccion.setTitle("Ver respuestas", for: .normal)
-            botonDerechoAccion.setImage(UIImage(systemName: "envelope.open"), for: .normal)
-        } else {
-            actualizarIconoGuardado(yaGuardado: yaGuardado)
- 
-            botonDerechoAccion.setTitle("Responder", for: .normal)
-            botonDerechoAccion.setImage(UIImage(systemName: "envelope"), for: .normal)
-        }
     }
  
     // Cambia el ícono y texto del botón izquierdo entre "Guardar" (bookmark
@@ -87,6 +66,18 @@ class ReporteTableViewCell: UITableViewCell {
         }
     }
  
+    func actualizarIconoFinalizado(yaFinalizado: Bool) {
+        if yaFinalizado {
+            botonIzquierdoAccion?.setTitle("Finalizado", for: .normal)
+            botonIzquierdoAccion?.setImage(UIImage(systemName: "checkmark.seal.fill"), for: .normal)
+            botonIzquierdoAccion?.isEnabled = false
+        } else {
+            botonIzquierdoAccion?.setTitle("Finalizar", for: .normal)
+            botonIzquierdoAccion?.setImage(UIImage(systemName: "checkmark.seal"), for: .normal)
+            botonIzquierdoAccion?.isEnabled = true
+        }
+    }
+    
     @IBAction func tocoBotonIzquierdo(_ sender: UIButton) {
         accionBotonIzquierdo?()
     }

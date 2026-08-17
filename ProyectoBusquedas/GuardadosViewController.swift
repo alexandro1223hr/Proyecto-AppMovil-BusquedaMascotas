@@ -156,10 +156,9 @@ class GuardadosViewController: UIViewController, UITableViewDataSource, UITableV
             }
         }
  
-        // Modo Inicio (Guardar/Responder). Como esta pantalla lista solo
-        // publicaciones guardadas, yaGuardado siempre es true al construir la celda.
+        //
         cell.reporteActual = reporte
-        cell.configurarModoBotones(esMisPublicaciones: false, yaGuardado: true)
+        cell.actualizarIconoGuardado(yaGuardado: true)
  
         cell.accionBotonIzquierdo = { [weak self, weak cell] in
             guard let self = self, let cell = cell else { return }
