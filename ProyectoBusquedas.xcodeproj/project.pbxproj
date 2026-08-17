@@ -16,50 +16,23 @@
 		AE0DDD4E30267CC60092CB15 /* ProyectoBusquedasUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0DDD4D30267CC60092CB15 /* ProyectoBusquedasUITests.swift */; };
 		AE0DDD5030267CC60092CB15 /* ProyectoBusquedasUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0DDD4F30267CC60092CB15 /* ProyectoBusquedasUITestsLaunchTests.swift */; };
 		AE0DDD5D30267DBE0092CB15 /* InicioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0DDD5C30267DBE0092CB15 /* InicioViewController.swift */; };
-		AE0DDD5E30267DBE0092CB15 /* InicioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0DDD5C30267DBE0092CB15 /* InicioViewController.swift */; };
-		AE0DDD5F30267DBE0092CB15 /* InicioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0DDD5C30267DBE0092CB15 /* InicioViewController.swift */; };
 		AE0DDD61302680340092CB15 /* GuardadosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0DDD60302680340092CB15 /* GuardadosViewController.swift */; };
-		AE0DDD62302680340092CB15 /* GuardadosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0DDD60302680340092CB15 /* GuardadosViewController.swift */; };
-		AE0DDD63302680340092CB15 /* GuardadosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0DDD60302680340092CB15 /* GuardadosViewController.swift */; };
 		AE0DDD653026814A0092CB15 /* PerfilViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0DDD643026814A0092CB15 /* PerfilViewController.swift */; };
-		AE0DDD663026814A0092CB15 /* PerfilViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0DDD643026814A0092CB15 /* PerfilViewController.swift */; };
-		AE0DDD673026814A0092CB15 /* PerfilViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0DDD643026814A0092CB15 /* PerfilViewController.swift */; };
 		AE0DDD6930269B1B0092CB15 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0DDD6830269B1B0092CB15 /* LoginViewController.swift */; };
-		AE0DDD6A30269B1B0092CB15 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0DDD6830269B1B0092CB15 /* LoginViewController.swift */; };
-		AE0DDD6B30269B1B0092CB15 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0DDD6830269B1B0092CB15 /* LoginViewController.swift */; };
 		AE0DDD6D3026AD1A0092CB15 /* RegistroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0DDD6C3026AD1A0092CB15 /* RegistroViewController.swift */; };
-		AE0DDD6E3026AD1A0092CB15 /* RegistroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0DDD6C3026AD1A0092CB15 /* RegistroViewController.swift */; };
-		AE0DDD6F3026AD1A0092CB15 /* RegistroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0DDD6C3026AD1A0092CB15 /* RegistroViewController.swift */; };
 		AE10E2F23027D1CE000ADBD6 /* BusquedasDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AE10E2F03027D1CE000ADBD6 /* BusquedasDataModel.xcdatamodeld */; };
 		AE10E2F33027D1CE000ADBD6 /* BusquedasDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AE10E2F03027D1CE000ADBD6 /* BusquedasDataModel.xcdatamodeld */; };
 		AE10E2F43027D1CE000ADBD6 /* BusquedasDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AE10E2F03027D1CE000ADBD6 /* BusquedasDataModel.xcdatamodeld */; };
+		AE3C15BF30323E3C00E30655 /* RespuestaTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE3C15BE30323E3C00E30655 /* RespuestaTableViewCell.swift */; };
 		AE5BEADC302A861A00A98601 /* ActualizarPerfilViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5BEADB302A861A00A98601 /* ActualizarPerfilViewController.swift */; };
-		AE5BEADD302A861A00A98601 /* ActualizarPerfilViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5BEADB302A861A00A98601 /* ActualizarPerfilViewController.swift */; };
-		AE5BEADE302A861A00A98601 /* ActualizarPerfilViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5BEADB302A861A00A98601 /* ActualizarPerfilViewController.swift */; };
 		AE5BEAE0302AADD400A98601 /* ReporteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5BEADF302AADD400A98601 /* ReporteTableViewCell.swift */; };
-		AE5BEAE1302AADD400A98601 /* ReporteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5BEADF302AADD400A98601 /* ReporteTableViewCell.swift */; };
-		AE5BEAE2302AADD400A98601 /* ReporteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5BEADF302AADD400A98601 /* ReporteTableViewCell.swift */; };
 		AE6E9B0D3030FC14001F0013 /* ReporteDetalleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6E9B0C3030FC13001F0013 /* ReporteDetalleViewController.swift */; };
-		AE6E9B0E3030FC14001F0013 /* ReporteDetalleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6E9B0C3030FC13001F0013 /* ReporteDetalleViewController.swift */; };
-		AE6E9B0F3030FC14001F0013 /* ReporteDetalleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6E9B0C3030FC13001F0013 /* ReporteDetalleViewController.swift */; };
-		AE6E9B1130312E68001F0013 /* RespuestasRecibidasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6E9B1030312E68001F0013 /* RespuestasRecibidasViewController.swift */; };
-		AE6E9B1230312E68001F0013 /* RespuestasRecibidasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6E9B1030312E68001F0013 /* RespuestasRecibidasViewController.swift */; };
-		AE6E9B1330312E68001F0013 /* RespuestasRecibidasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6E9B1030312E68001F0013 /* RespuestasRecibidasViewController.swift */; };
+		AE6E9B1130312E68001F0013 /* RespuestasEnviadasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6E9B1030312E68001F0013 /* RespuestasEnviadasViewController.swift */; };
 		AE6E9B15303136E8001F0013 /* EnviarRespuestaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6E9B14303136E8001F0013 /* EnviarRespuestaViewController.swift */; };
-		AE6E9B16303136E8001F0013 /* EnviarRespuestaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6E9B14303136E8001F0013 /* EnviarRespuestaViewController.swift */; };
-		AE6E9B17303136E8001F0013 /* EnviarRespuestaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6E9B14303136E8001F0013 /* EnviarRespuestaViewController.swift */; };
 		AE7AF210302E539D00467F1F /* SeleccionarUbicacionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7AF20F302E539D00467F1F /* SeleccionarUbicacionViewController.swift */; };
-		AE7AF211302E539D00467F1F /* SeleccionarUbicacionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7AF20F302E539D00467F1F /* SeleccionarUbicacionViewController.swift */; };
-		AE7AF212302E539D00467F1F /* SeleccionarUbicacionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7AF20F302E539D00467F1F /* SeleccionarUbicacionViewController.swift */; };
 		AECD82CF302D192800830129 /* PublicarReporteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECD82CE302D192800830129 /* PublicarReporteViewController.swift */; };
-		AECD82D0302D192800830129 /* PublicarReporteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECD82CE302D192800830129 /* PublicarReporteViewController.swift */; };
-		AECD82D1302D192800830129 /* PublicarReporteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECD82CE302D192800830129 /* PublicarReporteViewController.swift */; };
 		AED83E52302FB0670083C045 /* ReportesPublicadosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED83E51302FB0670083C045 /* ReportesPublicadosViewController.swift */; };
-		AED83E53302FB0670083C045 /* ReportesPublicadosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED83E51302FB0670083C045 /* ReportesPublicadosViewController.swift */; };
-		AED83E54302FB0670083C045 /* ReportesPublicadosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED83E51302FB0670083C045 /* ReportesPublicadosViewController.swift */; };
 		AED83E5A302FEB880083C045 /* MapaGeneralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED83E59302FEB880083C045 /* MapaGeneralViewController.swift */; };
-		AED83E5B302FEB880083C045 /* MapaGeneralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED83E59302FEB880083C045 /* MapaGeneralViewController.swift */; };
-		AED83E5C302FEB880083C045 /* MapaGeneralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED83E59302FEB880083C045 /* MapaGeneralViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,10 +71,11 @@
 		AE0DDD6830269B1B0092CB15 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		AE0DDD6C3026AD1A0092CB15 /* RegistroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistroViewController.swift; sourceTree = "<group>"; };
 		AE10E2F13027D1CE000ADBD6 /* BusquedasDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BusquedasDataModel.xcdatamodel; sourceTree = "<group>"; };
+		AE3C15BE30323E3C00E30655 /* RespuestaTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RespuestaTableViewCell.swift; sourceTree = "<group>"; };
 		AE5BEADB302A861A00A98601 /* ActualizarPerfilViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActualizarPerfilViewController.swift; sourceTree = "<group>"; };
 		AE5BEADF302AADD400A98601 /* ReporteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReporteTableViewCell.swift; sourceTree = "<group>"; };
 		AE6E9B0C3030FC13001F0013 /* ReporteDetalleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReporteDetalleViewController.swift; sourceTree = "<group>"; };
-		AE6E9B1030312E68001F0013 /* RespuestasRecibidasViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RespuestasRecibidasViewController.swift; sourceTree = "<group>"; };
+		AE6E9B1030312E68001F0013 /* RespuestasEnviadasViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RespuestasEnviadasViewController.swift; sourceTree = "<group>"; };
 		AE6E9B14303136E8001F0013 /* EnviarRespuestaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnviarRespuestaViewController.swift; sourceTree = "<group>"; };
 		AE7AF20F302E539D00467F1F /* SeleccionarUbicacionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeleccionarUbicacionViewController.swift; sourceTree = "<group>"; };
 		AECD82CE302D192800830129 /* PublicarReporteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicarReporteViewController.swift; sourceTree = "<group>"; };
@@ -163,12 +137,11 @@
 				AE0DDD3730267CC50092CB15 /* LaunchScreen.storyboard */,
 				AE0DDD5C30267DBE0092CB15 /* InicioViewController.swift */,
 				AE5BEADF302AADD400A98601 /* ReporteTableViewCell.swift */,
-				AECD82CE302D192800830129 /* PublicarReporteViewController.swift */,
 				AE7AF20F302E539D00467F1F /* SeleccionarUbicacionViewController.swift */,
 				AE6E9B0C3030FC13001F0013 /* ReporteDetalleViewController.swift */,
 				AE0DDD3530267CC50092CB15 /* Assets.xcassets */,
+				AECD82CE302D192800830129 /* PublicarReporteViewController.swift */,
 				AED83E51302FB0670083C045 /* ReportesPublicadosViewController.swift */,
-				AE6E9B1030312E68001F0013 /* RespuestasRecibidasViewController.swift */,
 				AED83E59302FEB880083C045 /* MapaGeneralViewController.swift */,
 				AE0DDD3A30267CC50092CB15 /* Info.plist */,
 				AE0DDD643026814A0092CB15 /* PerfilViewController.swift */,
@@ -177,7 +150,9 @@
 				AE5BEADB302A861A00A98601 /* ActualizarPerfilViewController.swift */,
 				AE0DDD60302680340092CB15 /* GuardadosViewController.swift */,
 				AE10E2F03027D1CE000ADBD6 /* BusquedasDataModel.xcdatamodeld */,
+				AE6E9B1030312E68001F0013 /* RespuestasEnviadasViewController.swift */,
 				AE6E9B14303136E8001F0013 /* EnviarRespuestaViewController.swift */,
+				AE3C15BE30323E3C00E30655 /* RespuestaTableViewCell.swift */,
 			);
 			path = ProyectoBusquedas;
 			sourceTree = "<group>";
@@ -332,12 +307,13 @@
 			files = (
 				AE10E2F23027D1CE000ADBD6 /* BusquedasDataModel.xcdatamodeld in Sources */,
 				AE0DDD6930269B1B0092CB15 /* LoginViewController.swift in Sources */,
+				AE3C15BF30323E3C00E30655 /* RespuestaTableViewCell.swift in Sources */,
 				AE0DDD653026814A0092CB15 /* PerfilViewController.swift in Sources */,
 				AE0DDD2A30267CC30092CB15 /* AppDelegate.swift in Sources */,
 				AE6E9B15303136E8001F0013 /* EnviarRespuestaViewController.swift in Sources */,
 				AE0DDD61302680340092CB15 /* GuardadosViewController.swift in Sources */,
 				AE5BEAE0302AADD400A98601 /* ReporteTableViewCell.swift in Sources */,
-				AE6E9B1130312E68001F0013 /* RespuestasRecibidasViewController.swift in Sources */,
+				AE6E9B1130312E68001F0013 /* RespuestasEnviadasViewController.swift in Sources */,
 				AECD82CF302D192800830129 /* PublicarReporteViewController.swift in Sources */,
 				AE6E9B0D3030FC14001F0013 /* ReporteDetalleViewController.swift in Sources */,
 				AED83E5A302FEB880083C045 /* MapaGeneralViewController.swift in Sources */,
@@ -354,22 +330,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AE5BEADD302A861A00A98601 /* ActualizarPerfilViewController.swift in Sources */,
 				AE0DDD4430267CC60092CB15 /* ProyectoBusquedasTests.swift in Sources */,
-				AE0DDD6E3026AD1A0092CB15 /* RegistroViewController.swift in Sources */,
-				AE0DDD62302680340092CB15 /* GuardadosViewController.swift in Sources */,
-				AED83E5B302FEB880083C045 /* MapaGeneralViewController.swift in Sources */,
-				AE0DDD663026814A0092CB15 /* PerfilViewController.swift in Sources */,
-				AE5BEAE1302AADD400A98601 /* ReporteTableViewCell.swift in Sources */,
-				AE6E9B1230312E68001F0013 /* RespuestasRecibidasViewController.swift in Sources */,
-				AECD82D0302D192800830129 /* PublicarReporteViewController.swift in Sources */,
 				AE10E2F33027D1CE000ADBD6 /* BusquedasDataModel.xcdatamodeld in Sources */,
-				AE0DDD6A30269B1B0092CB15 /* LoginViewController.swift in Sources */,
-				AE0DDD5E30267DBE0092CB15 /* InicioViewController.swift in Sources */,
-				AED83E53302FB0670083C045 /* ReportesPublicadosViewController.swift in Sources */,
-				AE7AF211302E539D00467F1F /* SeleccionarUbicacionViewController.swift in Sources */,
-				AE6E9B16303136E8001F0013 /* EnviarRespuestaViewController.swift in Sources */,
-				AE6E9B0E3030FC14001F0013 /* ReporteDetalleViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,22 +339,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AE5BEADE302A861A00A98601 /* ActualizarPerfilViewController.swift in Sources */,
-				AE0DDD6B30269B1B0092CB15 /* LoginViewController.swift in Sources */,
 				AE0DDD4E30267CC60092CB15 /* ProyectoBusquedasUITests.swift in Sources */,
-				AE0DDD63302680340092CB15 /* GuardadosViewController.swift in Sources */,
-				AE6E9B17303136E8001F0013 /* EnviarRespuestaViewController.swift in Sources */,
-				AE0DDD5F30267DBE0092CB15 /* InicioViewController.swift in Sources */,
-				AE5BEAE2302AADD400A98601 /* ReporteTableViewCell.swift in Sources */,
-				AE6E9B1330312E68001F0013 /* RespuestasRecibidasViewController.swift in Sources */,
-				AECD82D1302D192800830129 /* PublicarReporteViewController.swift in Sources */,
-				AE6E9B0F3030FC14001F0013 /* ReporteDetalleViewController.swift in Sources */,
-				AED83E5C302FEB880083C045 /* MapaGeneralViewController.swift in Sources */,
-				AE7AF212302E539D00467F1F /* SeleccionarUbicacionViewController.swift in Sources */,
-				AED83E54302FB0670083C045 /* ReportesPublicadosViewController.swift in Sources */,
-				AE0DDD6F3026AD1A0092CB15 /* RegistroViewController.swift in Sources */,
 				AE0DDD5030267CC60092CB15 /* ProyectoBusquedasUITestsLaunchTests.swift in Sources */,
-				AE0DDD673026814A0092CB15 /* PerfilViewController.swift in Sources */,
 				AE10E2F43027D1CE000ADBD6 /* BusquedasDataModel.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

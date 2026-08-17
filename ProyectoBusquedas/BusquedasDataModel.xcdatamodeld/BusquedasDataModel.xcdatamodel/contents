@@ -27,11 +27,23 @@
         <attribute name="idPublicacion" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="idUsuario" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
     </entity>
+    <entity name="RespuestaEntity" representedClassName="RespuestaEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="descripcion" optional="YES" attributeType="String"/>
+        <attribute name="fechaHoraRespuesta" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="fotoMascota" optional="YES" attributeType="Binary"/>
+        <attribute name="idPublicacion" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="idRespuesta" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="latitud" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="longitud" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="ubicacionAvistado" optional="YES" attributeType="String"/>
+        <relationship name="usuario" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UsuarioEntity" inverseName="respuestas" inverseEntity="UsuarioEntity"/>
+    </entity>
     <entity name="UsuarioEntity" representedClassName=".UsuarioEntity" syncable="YES" codeGenerationType="class">
         <attribute name="correo" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="nombre" optional="YES" attributeType="String"/>
         <attribute name="password" optional="YES" attributeType="String"/>
         <attribute name="telefono" optional="YES" attributeType="String"/>
+        <relationship name="respuestas" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RespuestaEntity" inverseName="usuario" inverseEntity="RespuestaEntity"/>
     </entity>
 </model>

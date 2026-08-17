@@ -27,6 +27,8 @@ class SeleccionarUbicacionViewController: UIViewController, UITextFieldDelegate,
     var latitudConfirmada: Double?
     var longitudConfirmada: Double?
     var textoReferenciaConfirmado: String = ""
+    
+    var identifierUnwindDestino: String = "unwindAPublicarReporte"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -136,7 +138,9 @@ class SeleccionarUbicacionViewController: UIViewController, UITextFieldDelegate,
             }
             // Se ejecuta el unwind segue después de intentar el reverse geocoding,
             // ya sea que haya funcionado o no (en ese caso se usa el texto genérico).
-            self.performSegue(withIdentifier: "unwindAPublicarReporte", sender: self)
+            
+            // self.performSegue(withIdentifier: "unwindAPublicarReporte", sender: self)
+            self.performSegue(withIdentifier: self.identifierUnwindDestino, sender: self)
         }
     }
 

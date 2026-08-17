@@ -228,7 +228,12 @@ class GuardadosViewController: UIViewController, UITableViewDataSource, UITableV
     }
  
     func responderPublicacion(_ reporte: PublicacionEntity) {
-        // TODO: navegar a pantalla de responder / contacto
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "EnviarRespuestaViewController") as! EnviarRespuestaViewController
+
+        vc.idPublicacion = reporte.idPublicacion
+
+        navigationController?.pushViewController(vc, animated: true)
     }
  
     // MARK: - Utilidades

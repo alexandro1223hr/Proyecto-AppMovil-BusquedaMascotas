@@ -29,11 +29,20 @@ class RespuestasEnviadasViewController: UIViewController, UITableViewDataSource,
     }
  
     func listarRespuestas() {
+        guard let idUsuarioString = UserDefaults.standard.string(forKey: "usuarioActualID"),
+              let idUsuario = UUID(uuidString: idUsuarioString) else {
+            respuestasList = []
+            respuestasTableView.reloadData()
+            return
+        }
+        
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
  
         let request: NSFetchRequest<RespuestaEntity> = RespuestaEntity.fetchRequest()
  
+        request.predicate = NSPredicate(format: "usuario.id == %@", idUsuario as CVarArg)
+        
         let orden = NSSortDescriptor(key: "fechaHoraRespuesta", ascending: false)
         request.sortDescriptors = [orden]
  

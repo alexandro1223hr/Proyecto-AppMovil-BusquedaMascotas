@@ -55,7 +55,7 @@ class InicioViewController: UIViewController, UITableViewDataSource, UITableView
         let opcion1 = UIAction(title: "Reportes publicados") { [weak self] _ in
             self?.performSegue(withIdentifier: "mostrarReportesPublicados", sender: self)
         }
-        let opcion2 = UIAction(title: "Reportes recibidos") { [weak self] _ in
+        let opcion2 = UIAction(title: "Respuestas enviadas") { [weak self] _ in
             self?.performSegue(withIdentifier: "mostrarReportesRecibidos", sender: self)
         }
         let opcion3 = UIAction(title: "Mapa general") { [weak self] _ in
@@ -366,7 +366,12 @@ class InicioViewController: UIViewController, UITableViewDataSource, UITableView
     }
      
     func responderPublicacion(_ reporte: PublicacionEntity) {
-        // TODO: navegar a pantalla de responder / contacto
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "EnviarRespuestaViewController") as! EnviarRespuestaViewController
+
+        vc.idPublicacion = reporte.idPublicacion
+
+        navigationController?.pushViewController(vc, animated: true)
     }
      
     func mostrarError(_ mensaje: String) {
