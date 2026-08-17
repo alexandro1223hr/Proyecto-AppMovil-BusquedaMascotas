@@ -189,7 +189,7 @@ class ReportesPublicadosViewController: UIViewController, UITableViewDataSource,
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    // MARK: - Acciones de los botones
+    // MARK: - Finalizar Reporte
     func finalizarReporte(_ reporte: PublicacionEntity, celda: ReporteTableViewCell) {
         let alerta = UIAlertController(title: "Finalizar reporte",
                                        message: "¿Está seguro de finalizar este reporte? Ya no será visible para otros usuarios",
@@ -265,6 +265,5 @@ class ReportesPublicadosViewController: UIViewController, UITableViewDataSource,
         return "¡Recompensa! S/. \(montoTexto)"
     }
     
-
-    
 }
+// SCRUM-8
