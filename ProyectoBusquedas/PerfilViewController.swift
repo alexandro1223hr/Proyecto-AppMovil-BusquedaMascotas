@@ -69,8 +69,11 @@ class PerfilViewController: UIViewController {
     }
     
     @IBAction func cerrarSesion(_ sender: UIButton) {
+        
         // Remueve el ID de UserDefaults
         UserDefaults.standard.removeObject(forKey: "usuarioActualID")
+        // Remueve el token de validacion
+        UserDefaults.standard.removeObject(forKey: "usuarioActualToken")
         
         mostrarEstadoSinSesion()
     }

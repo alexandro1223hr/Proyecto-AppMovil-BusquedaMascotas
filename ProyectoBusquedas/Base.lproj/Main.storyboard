@@ -607,6 +607,7 @@
                                                             </label>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uqN-BZ-F8f">
                                                                 <rect key="frame" x="0.0" y="20" width="175" height="30"/>
+                                                                <accessibility key="accessibilityConfiguration" identifier="estadoReporteDropdown"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="175" id="dDW-C3-XPL"/>
                                                                 </constraints>
@@ -635,6 +636,7 @@
                                                             </label>
                                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Lima, SJL" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YTj-Jy-jSj">
                                                                 <rect key="frame" x="0.0" y="21" width="175" height="34"/>
+                                                                <accessibility key="accessibilityConfiguration" identifier="ciudadTextField"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="175" id="Nc8-A4-NSy"/>
                                                                 </constraints>
@@ -656,6 +658,7 @@
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="E8j-8g-Jno">
                                                         <rect key="frame" x="0.0" y="21" width="361" height="42"/>
+                                                        <accessibility key="accessibilityConfiguration" identifier="descripcionExtravioTextField"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="361" id="5EJ-HV-ACv"/>
                                                             <constraint firstAttribute="height" constant="42" id="6KR-fE-Hs1"/>
@@ -679,6 +682,7 @@
                                                         <subviews>
                                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MVo-PG-KOv">
                                                                 <rect key="frame" x="0.0" y="0.0" width="191" height="34"/>
+                                                                <accessibility key="accessibilityConfiguration" identifier="ubicacionAproximadaTextField"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="191" id="QKx-7p-mNT"/>
                                                                 </constraints>
@@ -725,6 +729,7 @@
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ppY-gT-S8P">
                                                         <rect key="frame" x="0.0" y="21" width="361" height="34"/>
+                                                        <accessibility key="accessibilityConfiguration" identifier="nombreMascotaTextField"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="361" id="Tjt-jn-tqm"/>
                                                         </constraints>
@@ -747,6 +752,7 @@
                                                             </label>
                                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EjF-7A-PDy">
                                                                 <rect key="frame" x="0.0" y="36" width="140" height="34"/>
+                                                                <accessibility key="accessibilityConfiguration" identifier="caracteristica1TextField"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="140" id="n38-Dt-JJc"/>
                                                                 </constraints>
@@ -755,6 +761,7 @@
                                                             </textField>
                                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qn6-DF-BHI">
                                                                 <rect key="frame" x="0.0" y="72" width="140" height="34"/>
+                                                                <accessibility key="accessibilityConfiguration" identifier="caracteristica2TextField"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="140" id="pFh-0B-jOu"/>
                                                                 </constraints>
@@ -763,6 +770,7 @@
                                                             </textField>
                                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TCZ-Rd-UxK">
                                                                 <rect key="frame" x="0.0" y="108.00000000000006" width="140" height="34"/>
+                                                                <accessibility key="accessibilityConfiguration" identifier="caracteristica3TextField"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="140" id="i85-uo-h41"/>
                                                                 </constraints>
@@ -830,6 +838,7 @@
                                                             </label>
                                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ha8-q9-gYH">
                                                                 <rect key="frame" x="0.0" y="21" width="175" height="34"/>
+                                                                <accessibility key="accessibilityConfiguration" identifier="telefonoReporteTextField"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="175" id="b5x-6h-iA7"/>
                                                                 </constraints>
@@ -849,6 +858,7 @@
                                                             </label>
                                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Opcional" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ckL-36-aWA">
                                                                 <rect key="frame" x="0.0" y="21" width="175" height="34"/>
+                                                                <accessibility key="accessibilityConfiguration" identifier="telefonoAdicionalTextField"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="175" id="R5Q-BU-U7j"/>
                                                                 </constraints>
@@ -870,6 +880,7 @@
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dbZ-4T-97W">
                                                         <rect key="frame" x="0.0" y="21" width="361" height="34"/>
+                                                        <accessibility key="accessibilityConfiguration" identifier="recompensaTextField"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="361" id="kEZ-Yb-Pif"/>
                                                         </constraints>
@@ -927,20 +938,20 @@
             <objects>
                 <viewController id="Tul-Y4-4ro" customClass="SeleccionarUbicacionViewController" customModule="ProyectoBusquedas" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ffa-bI-DhZ">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Buscar ubicación" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gg1-sm-ApD">
-                                <rect key="frame" x="16" y="18" width="361" height="34"/>
+                                <rect key="frame" x="16" y="121" width="361" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hLl-fV-dI7">
-                                <rect key="frame" x="16" y="57" width="361" height="706"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" restorationIdentifier="mapaView" translatesAutoresizingMaskIntoConstraints="NO" id="hLl-fV-dI7">
+                                <rect key="frame" x="16" y="160" width="361" height="530"/>
                                 <standardMapConfiguration key="preferredConfiguration"/>
                             </mapView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pin" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="iat-Ot-FhN">
-                                <rect key="frame" x="179" y="374.66666666666669" width="35" height="36.333333333333314"/>
+                                <rect key="frame" x="179" y="389.66666666666669" width="35" height="36.333333333333314"/>
                                 <color key="tintColor" systemColor="systemGreenColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="35" id="C3n-ze-VvX"/>
@@ -948,7 +959,7 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Az4-3E-l1h">
-                                <rect key="frame" x="77" y="801" width="239" height="41"/>
+                                <rect key="frame" x="77" y="728" width="239" height="41"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="tinted" title="Confirmar ubicación">
                                     <fontDescription key="titleFontDescription" name="ArialMT" family="Arial" pointSize="24"/>
@@ -1404,6 +1415,7 @@
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WMc-lf-nOM">
                                                 <rect key="frame" x="0.0" y="20.333333333333314" width="350" height="45"/>
                                                 <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="correoLoginTextField"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="350" id="Kb2-Mg-hDP"/>
                                                     <constraint firstAttribute="height" constant="45" id="ZDL-oX-bZn"/>
@@ -1425,6 +1437,7 @@
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QU1-N6-rjN">
                                                 <rect key="frame" x="0.0" y="20.333333333333371" width="350" height="45"/>
                                                 <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="passwordLoginTextField"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="45" id="9C6-Rd-zcM"/>
                                                     <constraint firstAttribute="width" constant="350" id="T5Q-eR-at3"/>
@@ -1530,6 +1543,7 @@
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="onV-hu-q7A">
                                                 <rect key="frame" x="0.0" y="20.333333333333314" width="350" height="40"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="nombreTextField"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="NqW-A7-hvJ"/>
                                                     <constraint firstAttribute="width" constant="350" id="Qkb-sA-v3q"/>
@@ -1553,6 +1567,7 @@
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iOR-hP-kEv">
                                                         <rect key="frame" x="0.0" y="20.333333333333314" width="170" height="40"/>
+                                                        <accessibility key="accessibilityConfiguration" identifier="correoTextField"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="170" id="AIo-B8-YIx"/>
                                                             <constraint firstAttribute="height" constant="40" id="gYN-ee-DKf"/>
@@ -1573,6 +1588,7 @@
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QYQ-kG-GQT">
                                                         <rect key="frame" x="0.0" y="20.333333333333314" width="170" height="40"/>
+                                                        <accessibility key="accessibilityConfiguration" identifier="telefonoTextField"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="Qbs-p1-njU"/>
                                                             <constraint firstAttribute="width" constant="170" id="axW-A2-MK6"/>
@@ -1595,6 +1611,7 @@
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Gc0-M6-U9W">
                                                 <rect key="frame" x="0.0" y="20.333333333333314" width="350" height="40"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="passwordTextField"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="350" id="JPY-th-ZCv"/>
                                                     <constraint firstAttribute="height" constant="40" id="vl6-7L-41V"/>
@@ -1615,6 +1632,7 @@
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jlP-97-25O">
                                                 <rect key="frame" x="0.0" y="20.333333333333371" width="350" height="40"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="confirmarPasswordTextField"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="350" id="Muz-w5-rSS"/>
                                                     <constraint firstAttribute="height" constant="40" id="YNv-WI-hkr"/>
@@ -2982,8 +3000,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="1NI-Ms-lDn"/>
-        <segue reference="ZAa-DT-BrH"/>
+        <segue reference="PbO-FS-kHh"/>
+        <segue reference="zj6-cv-cCO"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="bookmark" catalog="system" width="110" height="128"/>

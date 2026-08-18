@@ -20,8 +20,17 @@ class RegistroViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
+        // TestUI
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(ocultarTeclado))
+            tapGesture.cancelsTouchesInView = false
+            view.addGestureRecognizer(tapGesture)
+        
+    }
+    
+    // TestUI
+    @objc func ocultarTeclado() {
+        view.endEditing(true)
     }
     
     @IBAction func registrarUsuario(_ sender: UIButton) {
@@ -44,27 +53,51 @@ class RegistroViewController: UIViewController {
             return
         }
         
+        
+        // El registro se hace contra la API (siempre requiere conexión,
+        // no tiene sentido crear un usuario "offline" que el servidor no conoce)
+        APIService.registrar(nombre: nombre, correo: correo, telefono: telefono, password: password) { [weak self] exito, mensaje, usuario in
+            guard let self = self else { return }
+ 
+            if exito, let usuario = usuario {
+                // Registro en API y CoreData
+                self.guardarUsuarioLocal(usuario: usuario, password: password)
+ 
+                print("Usuario registrado correctamente")
+                self.navigationController?.popViewController(animated: true)
+ 
+            } else if mensaje == "sin_conexion" {
+                self.mostrarError("No hay conexión a internet. Intenta nuevamente más tarde.")
+            } else {
+                self.mostrarError(mensaje ?? "No se pudo registrar el usuario")
+            }
+        }
+    }
+ 
+    // Crea el UsuarioEntity local con los datos confirmados por el servidor
+    func guardarUsuarioLocal(usuario: Usuario, password: String) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
-        
-        // Registrar usuario
-        let usuario = UsuarioEntity(context: context)
-        
-        usuario.id = UUID()
-        usuario.nombre = nombre
-        usuario.correo = correo
-        usuario.telefono = telefono
-        usuario.password = password
-        
+ 
+        let nuevoUsuario = UsuarioEntity(context: context)
+ 
+        nuevoUsuario.id = usuario.id
+        nuevoUsuario.nombre = usuario.nombre
+        nuevoUsuario.correo = usuario.correo
+        nuevoUsuario.telefono = usuario.telefono ?? ""
+        nuevoUsuario.password = password
+ 
         do {
             try context.save()
-            print("Usuario registrado correctamente")
         } catch let error as NSError {
-            print("Error al guardar usuario: \(error), \(error.userInfo)")
+            print("Error al guardar usuario localmente: \(error), \(error.userInfo)")
         }
-        
-        // Quita el View Controller actual y vuelve al anterior
-        navigationController?.popViewController(animated: true)
+    }
+ 
+    func mostrarError(_ mensaje: String) {
+        let alert = UIAlertController(title: "Atención", message: mensaje, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Entendido", style: .default))
+        present(alert, animated: true)
     }
     // SCRUM-3
 }
