@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="22H420" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
-    <entity name="PublicacionEntity" representedClassName="PublicacionEntity" syncable="YES" codeGenerationType="class">
+    <entity name="PublicacionEntity" representedClassName=".PublicacionEntity" syncable="YES" codeGenerationType="class">
         <attribute name="caracteristicaMascota1" optional="YES" attributeType="String"/>
         <attribute name="caracteristicaMascota2" optional="YES" attributeType="String"/>
         <attribute name="caracteristicaMascota3" optional="YES" attributeType="String"/>
@@ -21,13 +21,13 @@
         <attribute name="telefonoUsuario" optional="YES" attributeType="String"/>
         <attribute name="ubicacionPerdido" optional="YES" attributeType="String"/>
     </entity>
-    <entity name="PublicacionGuardadaEntity" representedClassName="PublicacionGuardadaEntity" syncable="YES" codeGenerationType="class">
+    <entity name="PublicacionGuardadaEntity" representedClassName=".PublicacionGuardadaEntity" syncable="YES" codeGenerationType="class">
         <attribute name="fechaGuardado" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="idPublicacion" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="idUsuario" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
     </entity>
-    <entity name="RespuestaEntity" representedClassName="RespuestaEntity" syncable="YES" codeGenerationType="class">
+    <entity name="RespuestaEntity" representedClassName=".RespuestaEntity" syncable="YES" codeGenerationType="class">
         <attribute name="descripcion" optional="YES" attributeType="String"/>
         <attribute name="fechaHoraRespuesta" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="fotoMascota" optional="YES" attributeType="Binary"/>

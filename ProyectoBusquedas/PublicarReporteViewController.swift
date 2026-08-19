@@ -42,18 +42,8 @@ class PublicarReporteViewController: UIViewController, UIImagePickerControllerDe
 
         fotoMascotaImageView.contentMode = .scaleAspectFill
         fotoMascotaImageView.clipsToBounds = true
-        
-        // TestUI
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(ocultarTeclado))
-            tapGesture.cancelsTouchesInView = false
-            view.addGestureRecognizer(tapGesture)
     }
 
-    // TestUI
-    @objc func ocultarTeclado() {
-        view.endEditing(true)
-    }
-    
     func configurarMenuEstado() {
         // El primer item es un placeholder visual, no un valor válido a guardar
         let opcionPorDefecto = UIAction(title: "Seleccionar                  ▼", state: .on) { _ in
@@ -65,6 +55,11 @@ class PublicarReporteViewController: UIViewController, UIImagePickerControllerDe
         let opcionEncontrado = UIAction(title: "Encontrado") { _ in
             self.estadoBusquedaSeleccionado = "Encontrado"
         }
+        /*
+        let opcionFinalizado = UIAction(title: "Finalizado") { _ in
+            self.estadoBusquedaSeleccionado = "Finalizado"
+        }
+        */
 
         seleccionarEstadoButton.menu = UIMenu(children: [opcionPorDefecto, opcionSeBusca, opcionEncontrado])
         seleccionarEstadoButton.showsMenuAsPrimaryAction = true
@@ -200,106 +195,52 @@ class PublicarReporteViewController: UIViewController, UIImagePickerControllerDe
             montoDecimal = monto
         }
 
-        // 5. Registrar contra la API primero
-        let dto = CrearPublicacionDTO(
-            idUsuario: idUsuario,
-            nombreUsuario: usuario.nombre ?? "",
-            telefonoUsuario: telefonoUsuario,
-            telefonoOpcional: telefonoOpcional.isEmpty ? nil : telefonoOpcional,
-            nombreMascota: nombreMascota,
-            caracteristicaMascota1: caracteristica1.isEmpty ? nil : caracteristica1,
-            caracteristicaMascota2: caracteristica2.isEmpty ? nil : caracteristica2,
-            caracteristicaMascota3: caracteristica3.isEmpty ? nil : caracteristica3,
-            descripcionFechaHoraPerdido: descripcionFechaHora,
-            ubicacionPerdido: ubicacionPerdido.isEmpty ? nil : ubicacionPerdido,
-            ciudadDistrito: ciudadDistrito,
-            latitud: latitudSeleccionada,
-            longitud: longitudSeleccionada,
-            monto: montoDecimal == 0 ? nil : NSDecimalNumber(decimal: montoDecimal).doubleValue,
-            estadoBusqueda: estadoBusquedaSeleccionado,
-            fotoUrl: nil
-        )
-         
-        APIService.registrarPublicacion(dto) { [weak self] exito, mensaje, publicacionCreada in
-            guard let self = self else { return }
-         
-            if exito, let publicacionCreada = publicacionCreada {
-                self.guardarPublicacionLocal(
-                    idPublicacion: publicacionCreada.idPublicacion,
-                    idUsuario: idUsuario,
-                    nombreUsuario: usuario.nombre ?? "",
-                    ciudadDistrito: ciudadDistrito,
-                    descripcionFechaHora: descripcionFechaHora,
-                    ubicacionPerdido: ubicacionPerdido,
-                    nombreMascota: nombreMascota,
-                    caracteristica1: caracteristica1,
-                    caracteristica2: caracteristica2,
-                    caracteristica3: caracteristica3,
-                    telefonoUsuario: telefonoUsuario,
-                    telefonoOpcional: telefonoOpcional,
-                    montoDecimal: montoDecimal
-                )
-            } else if mensaje == "sin_conexion" {
-                self.mostrarError("No hay conexión a internet. La publicación no pudo registrarse.")
-            } else {
-                self.mostrarError(mensaje ?? "No se pudo registrar la publicación")
-            }
-        }
-    }
-
-    func guardarPublicacionLocal(idPublicacion: UUID, idUsuario: UUID, nombreUsuario: String,
-                                  ciudadDistrito: String, descripcionFechaHora: String, ubicacionPerdido: String,
-                                  nombreMascota: String, caracteristica1: String, caracteristica2: String, caracteristica3: String,
-                                  telefonoUsuario: String, telefonoOpcional: String, montoDecimal: Decimal) {
-     
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.persistentContainer.viewContext
-     
+        // 5. Crear la publicación en CoreData
         let publicacion = PublicacionEntity(context: context)
-     
-        // Se usa el mismo idPublicacion que asignó el servidor, no uno local
-        publicacion.idPublicacion = idPublicacion
+
+        publicacion.idPublicacion = UUID()
         publicacion.idUsuario = idUsuario
-        publicacion.nombreUsuario = nombreUsuario
-     
+        publicacion.nombreUsuario = usuario.nombre
+
         let ahora = Date()
         publicacion.fechaHoraPublicacion = ahora
-        publicacion.fechaHoraActualizacion = ahora
-     
+        publicacion.fechaHoraActualizacion = nil
+
         publicacion.estadoBusqueda = estadoBusquedaSeleccionado
-     
+
         publicacion.ciudadDistrito = ciudadDistrito
         publicacion.descripcionFechaHoraPerdido = descripcionFechaHora
         publicacion.ubicacionPerdido = ubicacionPerdido
         publicacion.latitud = latitudSeleccionada ?? 0.0
         publicacion.longitud = longitudSeleccionada ?? 0.0
-     
+
         publicacion.nombreMascota = nombreMascota
-     
+
         publicacion.caracteristicaMascota1 = caracteristica1
         publicacion.caracteristicaMascota2 = caracteristica2
         publicacion.caracteristicaMascota3 = caracteristica3
-     
-        // La foto sigue viviendo únicamente en CoreData; la API nunca la conoce
+
+        // La foto es opcional; si no se eligió ninguna, se guarda nil
         if let imagen = imagenSeleccionada {
             publicacion.fotoMascota = imagen.jpegData(compressionQuality: 0.7)
         }
-     
+
         publicacion.telefonoUsuario = telefonoUsuario
         publicacion.telefonoOpcional = telefonoOpcional.isEmpty ? nil : telefonoOpcional
-     
+
         publicacion.monto = montoDecimal as NSDecimalNumber
-     
+
+        // 6. Guardar
         do {
             try context.save()
             print("Publicación registrada correctamente")
             navigationController?.popViewController(animated: true)
         } catch {
             context.delete(publicacion)
-            mostrarError("La publicación se registró en el servidor, pero no se pudo guardar localmente: \(error.localizedDescription)")
+            mostrarError("No se pudo guardar la publicación: \(error.localizedDescription)")
         }
     }
-    
+
     // MARK: - Utilidades
 
     func mostrarError(_ mensaje: String) {

@@ -202,45 +202,42 @@ class InicioViewController: UIViewController, UITableViewDataSource, UITableView
     
     // MARK: - Listar Reportes
     func listarReportesPublicados(filtro: String = "") {
-        APIService.listarPublicaciones { [weak self] exito, mensaje, publicacionesAPI in
-            guard let self = self else { return }
-     
-            if exito, let publicacionesAPI = publicacionesAPI {
-                // Lista con API, sincroniza el resto de pantallas con CoreData
-                self.sincronizarPublicacionesLocales(publicacionesAPI)
-                self.listarDesdeCoreData(filtro: filtro)
-     
-            } else {
-                // Sino logra llamar por API lo hace por CoreData
-                self.listarDesdeCoreData(filtro: filtro)
-            }
-        }
-    }
-     
-    // Lista offline con CoreData
-    func listarDesdeCoreData(filtro: String = "") {
+        // CoreData
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.persistentContainer.viewContext
-     
+        
+        // Busca las publicaciones
         let request: NSFetchRequest<PublicacionEntity> = PublicacionEntity.fetchRequest()
-     
+        
+        // Filtra Reportes Finalizados
+        let filtrarFinalizados = NSPredicate(format: "estadoBusqueda != %@", "Finalizado")
+        
+        // Define texto para filtrar
         let texto = filtro.trimmingCharacters(in: .whitespacesAndNewlines)
         if !texto.isEmpty {
+            // [cd] Ignora mayusculas y tildes
             let filtrarCiudad = NSPredicate(format: "ciudadDistrito CONTAINS[cd] %@", texto)
             let filtrarMascota = NSPredicate(format: "nombreMascota CONTAINS[cd] %@", texto)
             let filtrarUsuario = NSPredicate(format: "nombreUsuario CONTAINS[cd] %@", texto)
             let filtrarEstado = NSPredicate(format: "estadoBusqueda CONTAINS[cd] %@", texto)
-     
+            
             request.predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [
-                filtrarCiudad, filtrarMascota, filtrarUsuario, filtrarEstado
+                filtrarCiudad, filtrarMascota, filtrarUsuario, filtrarEstado, filtrarFinalizados
             ])
+        } else {
+            request.predicate = filtrarFinalizados
         }
-     
-        let orden = NSSortDescriptor(key: "fechaHoraPublicacion", ascending: false)
+        
+        // Las ordena por fecha mas reciente
+        let orden = NSSortDescriptor(
+                key: "fechaHoraPublicacion",
+                ascending: false
+            )
         request.sortDescriptors = [orden]
-     
+        
         do {
-            let results = try managedContext.fetch(request)
+            let results = try
+            managedContext.fetch(request)
             reportesPublicadosList = results as [PublicacionEntity]
         }
         catch let error as NSError {
@@ -248,62 +245,9 @@ class InicioViewController: UIViewController, UITableViewDataSource, UITableView
         }
         ReportesTableView.reloadData()
     }
-     
-    // Crea o actualiza en CoreData cada publicación recibida de la API
-    func sincronizarPublicacionesLocales(_ publicacionesAPI: [Publicacion]) {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.persistentContainer.viewContext
-     
-        for publicacionAPI in publicacionesAPI {
-            let request: NSFetchRequest<PublicacionEntity> = PublicacionEntity.fetchRequest()
-            request.predicate = NSPredicate(format: "idPublicacion == %@", publicacionAPI.idPublicacion as CVarArg)
-            request.fetchLimit = 1
-     
-            do {
-                let publicacionLocal = try context.fetch(request).first ?? PublicacionEntity(context: context)
-     
-                // La foto NUNCA se sobreescribe desde la API (ella no la conoce);
-                // se conserva la que ya existiera localmente, si la hay
-                publicacionLocal.idPublicacion = publicacionAPI.idPublicacion
-                publicacionLocal.idUsuario = publicacionAPI.usuario.id
-                publicacionLocal.nombreUsuario = publicacionAPI.nombreUsuario ?? publicacionAPI.usuario.nombre
-                publicacionLocal.telefonoUsuario = publicacionAPI.telefonoUsuario
-                publicacionLocal.telefonoOpcional = publicacionAPI.telefonoOpcional
-                publicacionLocal.nombreMascota = publicacionAPI.nombreMascota
-                publicacionLocal.caracteristicaMascota1 = publicacionAPI.caracteristicaMascota1
-                publicacionLocal.caracteristicaMascota2 = publicacionAPI.caracteristicaMascota2
-                publicacionLocal.caracteristicaMascota3 = publicacionAPI.caracteristicaMascota3
-                publicacionLocal.descripcionFechaHoraPerdido = publicacionAPI.descripcionFechaHoraPerdido
-                publicacionLocal.ubicacionPerdido = publicacionAPI.ubicacionPerdido
-                publicacionLocal.ciudadDistrito = publicacionAPI.ciudadDistrito
-                publicacionLocal.latitud = publicacionAPI.latitud ?? 0.0
-                publicacionLocal.longitud = publicacionAPI.longitud ?? 0.0
-                publicacionLocal.estadoBusqueda = publicacionAPI.estadoBusqueda
-     
-                if let monto = publicacionAPI.monto {
-                    publicacionLocal.monto = Decimal(monto) as NSDecimalNumber
-                }
-     
-                if let fecha = publicacionAPI.fechaPublicacionComoDate {
-                    publicacionLocal.fechaHoraPublicacion = fecha
-                }
-                if let fecha = publicacionAPI.fechaActualizacionComoDate {
-                    publicacionLocal.fechaHoraActualizacion = fecha
-                }
-            } catch {
-                print("Error al sincronizar publicación \(publicacionAPI.idPublicacion): \(error)")
-            }
-        }
-     
-        do {
-            try context.save()
-        } catch let error as NSError {
-            print("Error al guardar publicaciones sincronizadas: \(error), \(error.userInfo)")
-        }
-    }
 
     
-    // MARK: - Funciones de utilidad
+    // Funciones de utilidad
 
     // Calcula tiempo transcurrido y lo establece como texto String
     func tiempoTranscurrido(desde fecha: Date) -> String {
