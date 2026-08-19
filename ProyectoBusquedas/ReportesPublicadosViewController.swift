@@ -194,30 +194,71 @@ class ReportesPublicadosViewController: UIViewController, UITableViewDataSource,
         let alerta = UIAlertController(title: "Finalizar reporte",
                                        message: "¿Está seguro de finalizar este reporte? Ya no será visible para otros usuarios",
                                        preferredStyle: .alert)
-        
-        let accionConfirmar = UIAlertAction(title: "Confirmar", style: .default) { _ in
-            reporte.estadoBusqueda = "Finalizado"
-            
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            let context = appDelegate.persistentContainer.viewContext
-            
-            do {
-                try context.save()
-                // La celda actualiza su propio botón izquierdo internamente
-                celda.actualizarIconoFinalizado(yaFinalizado: true)
-                celda.estadoBusquedaLabel?.text = "Finalizado"
-            } catch {
-                print("Error al guardar el estado finalizado: \(error)")
-            }
+     
+        let accionConfirmar = UIAlertAction(title: "Confirmar", style: .default) { [weak self] _ in
+            guard let self = self else { return }
+            self.confirmarFinalizarReporte(reporte, celda: celda)
         }
-        
+     
         let accionCancelar = UIAlertAction(title: "Cancelar", style: .cancel, handler: nil)
         alerta.addAction(accionCancelar)
         alerta.addAction(accionConfirmar)
-        
+     
         present(alerta, animated: true, completion: nil)
     }
+     
+    // Llama primero a la API (fuente de verdad), y solo si tiene éxito
+    // actualiza CoreData y la celda visible
+    func confirmarFinalizarReporte(_ reporte: PublicacionEntity, celda: ReporteTableViewCell) {
+        guard let idPublicacion = reporte.idPublicacion else {
+            mostrarError("No se pudo identificar la publicación")
+            return
+        }
+
+        // NUEVO: leer el token guardado
+        guard let token = UserDefaults.standard.string(forKey: "usuarioActualToken") else {
+            mostrarError("Tu sesión expiró, vuelve a iniciar sesión")
+            return
+        }
+
+        celda.botonIzquierdoAccion.isEnabled = false
+
+        // NUEVO: se agrega "token: token," como argumento
+        APIService.cambiarEstadoPublicacion(id: idPublicacion.uuidString, nuevoEstado: "Finalizado", token: token) { [weak self] exito, mensaje, _ in
+            guard let self = self else { return }
+
+            if exito {
+                self.guardarEstadoFinalizadoLocal(reporte, celda: celda)
+            } else if mensaje == "sin_conexion" {
+                celda.botonIzquierdoAccion.isEnabled = true
+                self.mostrarError("No hay conexión a internet. No se pudo finalizar el reporte.")
+            } else {
+                celda.botonIzquierdoAccion.isEnabled = true
+                self.mostrarError(mensaje ?? "No se pudo finalizar el reporte")
+            }
+        }
+    }
+     
+    // Refleja en CoreData el cambio ya confirmado por el servidor
+    func guardarEstadoFinalizadoLocal(_ reporte: PublicacionEntity, celda: ReporteTableViewCell) {
+        reporte.estadoBusqueda = "Finalizado"
+     
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+     
+        do {
+            try context.save()
+            celda.actualizarIconoFinalizado(yaFinalizado: true)
+            celda.estadoBusquedaLabel?.text = "Finalizado"
+            celda.botonIzquierdoAccion.isEnabled = false  // se mantiene deshabilitado: ya está finalizado
+        } catch {
+            print("Error al guardar el estado finalizado: \(error)")
+            celda.botonIzquierdoAccion.isEnabled = true
+            mostrarError("El reporte se finalizó en el servidor, pero no se pudo guardar localmente")
+        }
+    }
  
+    
     func irAReportesRecibidos() {
         performSegue(withIdentifier: "mostrarReportesRecibidos", sender: self)
     }
@@ -265,5 +306,10 @@ class ReportesPublicadosViewController: UIViewController, UITableViewDataSource,
         return "¡Recompensa! S/. \(montoTexto)"
     }
     
+    func mostrarError(_ mensaje: String) {
+        let alert = UIAlertController(title: "Atención", message: mensaje, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Entendido", style: .default))
+        present(alert, animated: true)
+    }
 }
 // SCRUM-8

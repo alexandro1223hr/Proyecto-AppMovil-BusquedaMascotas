@@ -201,53 +201,114 @@ class InicioViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     // MARK: - Listar Reportes
-    func listarReportesPublicados(filtro: String = "") {
-        // CoreData
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
-        // Busca las publicaciones
-        let request: NSFetchRequest<PublicacionEntity> = PublicacionEntity.fetchRequest()
-        
-        // Filtra Reportes Finalizados
-        let filtrarFinalizados = NSPredicate(format: "estadoBusqueda != %@", "Finalizado")
-        
-        // Define texto para filtrar
-        let texto = filtro.trimmingCharacters(in: .whitespacesAndNewlines)
-        if !texto.isEmpty {
-            // [cd] Ignora mayusculas y tildes
-            let filtrarCiudad = NSPredicate(format: "ciudadDistrito CONTAINS[cd] %@", texto)
-            let filtrarMascota = NSPredicate(format: "nombreMascota CONTAINS[cd] %@", texto)
-            let filtrarUsuario = NSPredicate(format: "nombreUsuario CONTAINS[cd] %@", texto)
-            let filtrarEstado = NSPredicate(format: "estadoBusqueda CONTAINS[cd] %@", texto)
-            
-            request.predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [
-                filtrarCiudad, filtrarMascota, filtrarUsuario, filtrarEstado, filtrarFinalizados
-            ])
-        } else {
-            request.predicate = filtrarFinalizados
+        func listarReportesPublicados(filtro: String = "") {
+            APIService.listarPublicaciones { [weak self] exito, mensaje, publicacionesAPI in
+                guard let self = self else { return }
+
+                if exito, let publicacionesAPI = publicacionesAPI {
+                    print("[listarReportesPublicados] \(publicacionesAPI.count) publicaciones recibidas de la API")
+                    self.sincronizarPublicacionesLocales(publicacionesAPI)
+                } else {
+                    print("[listarReportesPublicados] Falló la API (\(mensaje ?? "sin mensaje")), se usa solo lo que ya hay en CoreData")
+                }
+
+                // Se lista siempre desde CoreData, haya funcionado la API o no:
+                // así el filtro de búsqueda y el resto de la lógica no cambian
+                self.listarDesdeCoreData(filtro: filtro)
+            }
         }
-        
-        // Las ordena por fecha mas reciente
-        let orden = NSSortDescriptor(
-                key: "fechaHoraPublicacion",
-                ascending: false
-            )
-        request.sortDescriptors = [orden]
-        
-        do {
-            let results = try
-            managedContext.fetch(request)
-            reportesPublicadosList = results as [PublicacionEntity]
+
+        // Trae y filtra directamente desde CoreData. Es la misma lógica que ya
+        // tenías, ahora llamada tanto tras sincronizar con la API como en el
+        // camino de respaldo cuando la API no responde.
+        func listarDesdeCoreData(filtro: String = "") {
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let managedContext = appDelegate.persistentContainer.viewContext
+
+            let request: NSFetchRequest<PublicacionEntity> = PublicacionEntity.fetchRequest()
+
+            let filtrarFinalizados = NSPredicate(format: "estadoBusqueda != %@", "Finalizado")
+
+            let texto = filtro.trimmingCharacters(in: .whitespacesAndNewlines)
+            if !texto.isEmpty {
+                let filtrarCiudad = NSPredicate(format: "ciudadDistrito CONTAINS[cd] %@", texto)
+                let filtrarMascota = NSPredicate(format: "nombreMascota CONTAINS[cd] %@", texto)
+                let filtrarUsuario = NSPredicate(format: "nombreUsuario CONTAINS[cd] %@", texto)
+                let filtrarEstado = NSPredicate(format: "estadoBusqueda CONTAINS[cd] %@", texto)
+
+                request.predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [
+                    filtrarCiudad, filtrarMascota, filtrarUsuario, filtrarEstado, filtrarFinalizados
+                ])
+            } else {
+                request.predicate = filtrarFinalizados
+            }
+
+            let orden = NSSortDescriptor(key: "fechaHoraPublicacion", ascending: false)
+            request.sortDescriptors = [orden]
+
+            do {
+                let results = try managedContext.fetch(request)
+                reportesPublicadosList = results as [PublicacionEntity]
+            }
+            catch let error as NSError {
+                print("No fue posible listar los datos \(error), \(error.userInfo)")
+            }
+            ReportesTableView.reloadData()
         }
-        catch let error as NSError {
-            print("No fue posible listar los datos \(error), \(error.userInfo)")
+
+        // Crea o actualiza en CoreData cada publicación recibida de la API
+        func sincronizarPublicacionesLocales(_ publicacionesAPI: [Publicacion]) {
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let context = appDelegate.persistentContainer.viewContext
+
+            for publicacionAPI in publicacionesAPI {
+                let request: NSFetchRequest<PublicacionEntity> = PublicacionEntity.fetchRequest()
+                request.predicate = NSPredicate(format: "idPublicacion == %@", publicacionAPI.idPublicacion as CVarArg)
+                request.fetchLimit = 1
+
+                do {
+                    let publicacionLocal = try context.fetch(request).first ?? PublicacionEntity(context: context)
+
+                    publicacionLocal.idPublicacion = publicacionAPI.idPublicacion
+                    publicacionLocal.idUsuario = publicacionAPI.usuario.id
+                    publicacionLocal.nombreUsuario = publicacionAPI.nombreUsuario ?? publicacionAPI.usuario.nombre
+                    publicacionLocal.telefonoUsuario = publicacionAPI.telefonoUsuario
+                    publicacionLocal.telefonoOpcional = publicacionAPI.telefonoOpcional
+                    publicacionLocal.nombreMascota = publicacionAPI.nombreMascota
+                    publicacionLocal.caracteristicaMascota1 = publicacionAPI.caracteristicaMascota1
+                    publicacionLocal.caracteristicaMascota2 = publicacionAPI.caracteristicaMascota2
+                    publicacionLocal.caracteristicaMascota3 = publicacionAPI.caracteristicaMascota3
+                    publicacionLocal.descripcionFechaHoraPerdido = publicacionAPI.descripcionFechaHoraPerdido
+                    publicacionLocal.ubicacionPerdido = publicacionAPI.ubicacionPerdido
+                    publicacionLocal.ciudadDistrito = publicacionAPI.ciudadDistrito
+                    publicacionLocal.latitud = publicacionAPI.latitud ?? 0.0
+                    publicacionLocal.longitud = publicacionAPI.longitud ?? 0.0
+                    publicacionLocal.estadoBusqueda = publicacionAPI.estadoBusqueda
+
+                    if let monto = publicacionAPI.monto {
+                        publicacionLocal.monto = Decimal(monto) as NSDecimalNumber
+                    }
+
+                    if let fecha = publicacionAPI.fechaPublicacionComoDate {
+                        publicacionLocal.fechaHoraPublicacion = fecha
+                    }
+                    if let fecha = publicacionAPI.fechaActualizacionComoDate {
+                        publicacionLocal.fechaHoraActualizacion = fecha
+                    }
+                } catch {
+                    print("Error al sincronizar publicación \(publicacionAPI.idPublicacion): \(error)")
+                }
+            }
+
+            do {
+                try context.save()
+            } catch let error as NSError {
+                print("Error al guardar publicaciones sincronizadas: \(error), \(error.userInfo)")
+            }
         }
-        ReportesTableView.reloadData()
-    }
 
     
-    // Funciones de utilidad
+    // MARK: - Funciones de utilidad
 
     // Calcula tiempo transcurrido y lo establece como texto String
     func tiempoTranscurrido(desde fecha: Date) -> String {
@@ -297,7 +358,7 @@ class InicioViewController: UIViewController, UITableViewDataSource, UITableView
         // TODO: crear PublicacionGuardadaEntity
     }
 
-    // MARK: - Funciones Guardar Publicacion
+    // MARK: - Guardar Publicacion
     // Revisa si el usuario actual ya guardó esta publicación específica
     func publicacionEstaGuardada(_ reporte: PublicacionEntity) -> Bool {
         guard let idUsuarioString = UserDefaults.standard.string(forKey: "usuarioActualID"),
